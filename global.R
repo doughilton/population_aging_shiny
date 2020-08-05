@@ -13,7 +13,9 @@ countrycode_type = read.csv("./data/hnp_stats_csv/CountryCode_Type.csv")
 year_column_names = paste0("X", 1960:2019)
 
 country_list = unique((hnp_raw %>% filter(!(Country.Code %in% countrycode_type$Country.Code)))$Country.Name)
-region_list = unique((hnp_raw %>% filter(Country.Code %in% countrycode_type[countrycode_type$Type == "Region",]$Country.Code))$Country.Name)
+
+region_exclusion_list = c("East Asia & Pacific (IDA & IBRD countries)","Early-demographic dividend","East Asia & Pacific (exclud ing high income)","East Asia & Pacific (IDA & IBRD countries)","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","Late-demographic dividend","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","OECD members","Other small states","Post-demographic dividend","Pre-demographic dividend","South Asia (IDA & IBRD)","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","World")
+region_list = unique((hnp_raw %>% filter(Country.Code %in% countrycode_type[countrycode_type$Type == "Region",]$Country.Code) %>% filter(!(Country.Name %in% region_exclusion_list)))$Country.Name)
 
 population_count_indicator_codes = paste0('SP.POP.', rep(c("0004", "0509", "1014", "1519", "2024", "2529", "3034", "3539", "4044", "4549", "5054", "5559", "6064", "6569", "7074", "7579", "80UP"), 2), ".", c("FE", "MA"))
 pop_age_labels = c("0 - 4", "5 - 9", "10 - 14", "15 - 19", "20 - 24", "25 - 29", "30 - 34", "35 - 39", "40 - 44", "45 - 49", "50 - 54", "55 - 59", "60 - 64", "65 - 69", "70 - 74", "75 - 79", "80+")
@@ -26,6 +28,10 @@ literacy_rate_adult = "SE.ADT.LITR.ZS"
 school_enrollment_primary = "SE.PRM.ENRR"
 school_enrollment_secondary = "SE.SEC.ENRR"
 school_enrollment_tertiary = "SE.TER.ENRR"
+labor_force_total = "SL.TLF.TOTL.IN"
+total_pop = "SP.POP.TOTL"
+physician_per_1000 = "SH.MED.PHYS.ZS"
+
 
 # Increase in poverty gap at $1.90 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (USD)
 # Number of people pushed below the $1.90 ($ 2011 PPP) poverty line by out-of-pocket health care expenditure

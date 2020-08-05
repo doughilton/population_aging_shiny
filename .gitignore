@@ -1,0 +1,4 @@
+*.csv
+data inspection.Rmd
+data/
+.DS_Store

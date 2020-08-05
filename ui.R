@@ -1,6 +1,7 @@
 shinyUI(
     dashboardPage(
         dashboardHeader(title = "Population Aging"),
+        
         dashboardSidebar(
             sidebarUserPanel("NYC DSA",
                              image = "https://cbkdsanightschool.files.wordpress.com/2017/12/cropped-nyc-dsa-logo-simple.gif?w=200"),
@@ -15,35 +16,41 @@ shinyUI(
                          menuSubItem("Health", tabName = "region_health", icon = icon("heart")),
                          menuSubItem("Labor", tabName = "region_labor", icon = icon("wrench"))
                 ),
-                menuItem("Country Data", icon = icon("flag"),
-                         menuSubItem("Time Series Data", tabName = "country_timeseries", icon = icon("chart-line")),
-                         menuSubItem("Annual Data", tabName = "country_annual", icon = icon("chart-bar"))
+                menuItem("Country Data", tabName = "country_data", icon = icon("flag"),
+                         menuSubItem("Health", tabName = "country_health", icon = icon("heart")),
+                         menuSubItem("Labor", tabName = "country_labor", icon = icon("wrench"))
                 ),
                 menuItem("Raw Data", tabName = "raw_data"),
                 menuItem("About Me", tabName = "about_me")
             )
         ),
+        
         dashboardBody(
             tabItems(
                 tabItem(tabName = "world_data",
                         fluidRow(
                                 box(id = "world_data_box",
-                                       sliderInput(
-                                           inputId="world_year_slider",
-                                           label="Select Year:",
-                                           min=1960,
-                                           max=2018,
-                                           value=2010,
-                                           sep=""
-                                       ),
-                                        plotlyOutput("world_adro")
+                                    sliderInput(
+                                       inputId="world_year_slider",
+                                       label="Select Year:",
+                                       min=1960,
+                                       max=2018,
+                                       value=1990,
+                                       sep=""),
+                                    plotlyOutput("world_adro")
                                 )
                         )
                 ),
                 tabItem(tabName = "world_health",
                         fluidRow(
                             box(id = "world_health_box",
-                                plotlyOutput("world_pop_health")
+                                width = 12,
+                                column(6,
+                                        plotlyOutput("world_health_expenditure")
+                                ),
+                                column(6,
+                                       plotlyOutput("world_health_phys")
+                                )
                             )
                         )
                 ),
@@ -65,44 +72,47 @@ shinyUI(
                 tabItem(tabName = "region_labor",
                         fluidRow(
                             box(id = "region_labor_box",
-                                selectizeInput(inputId='region_labor_dropdown', 
-                                               label='Region',
-                                               choices=region_list),
-                                plotlyOutput("region_literacy_labor")
+                                width = 12,
+                                column(6,
+                                        selectizeInput(inputId='region_labor_dropdown', 
+                                                       label='Region',
+                                                       choices=region_list),
+                                        plotlyOutput("region_labor_school"),
+                                        plotlyOutput("region_labor_literacy")
+                                )
                             )
                         )
                 ),
-                tabItem(tabName = "country_timeseries",
+                tabItem(tabName = "country_health",
                         fluidRow(
-                            tabBox(id = "time_series_box",
-                                    tabPanel("Analysis",
-                                             selectizeInput(inputId='country_timeseries_dropdown', 
-                                                            label='Country',
-                                                            choices=country_list,
-                                                            selected = "Japan"),
-                                             plotlyOutput("birth_death_graph")
-                                    ),
-                                    tabPanel("Data", "Datatable place holder")
+                            box(id = "country_health_box",
+                                width = 12,
+                                 column(6,
+                                        selectizeInput(inputId='country_health_dropdown', 
+                                                        label='Country',
+                                                        choices=country_list,
+                                                        selected = "Japan",
+                                                        width = 200),
+                                        plotlyOutput("birth_death_graph"),
+                                        plotlyOutput("country_lab_65_ratios")
+                                 ),
+                                 column(6,
+                                        sliderInput(
+                                             inputId="country_health_year_slider",
+                                             label="Select Year:",
+                                             min=1960,
+                                             max=2018,
+                                             value=1990,
+                                             sep=""),
+                                        plotlyOutput("pop_age_graph")
+                                 )
                             )
                         )
                 ),
-                tabItem(tabName = "country_annual",
+                tabItem(tabName = "country_labor",
                         fluidRow(
-                            tabBox(id = "annual_box",
-                                   tabPanel("Analysis",
-                                            selectizeInput(inputId='country_annual_dropdown', 
-                                                           label='Country',
-                                                           choices=country_list,
-                                                           selected = "Japan"),
-                                            sliderInput(
-                                                inputId="country_annual_year_slider",
-                                                label="Select Year:",
-                                                min=1960,
-                                                max=2018,
-                                                value=2010,
-                                                sep=""
-                                            ),
-                                            plotlyOutput("pop_age_graph")
+                            tabBox(id = "country_labor_box",
+                                   tabPanel("Analysis", "Analysis place holder"
                                    ),
                                    tabPanel("Data", "Datatable place holder")
                             )
