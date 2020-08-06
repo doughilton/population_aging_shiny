@@ -12,16 +12,9 @@ shinyUI(
                          menuSubItem("Health", tabName = "world_health", icon = icon("heart")),
                          menuSubItem("Labor", tabName = "world_labor", icon = icon("wrench"))
                 ),
-                menuItem("Region Data", tabName = "region_data", icon = icon("globe-americas"),
-                         menuSubItem("Health", tabName = "region_health", icon = icon("heart")),
-                         menuSubItem("Labor", tabName = "region_labor", icon = icon("wrench"))
-                ),
-                menuItem("Country Data", tabName = "country_data", icon = icon("flag"),
-                         menuSubItem("Health", tabName = "country_health", icon = icon("heart")),
-                         menuSubItem("Labor", tabName = "country_labor", icon = icon("wrench"))
-                ),
-                menuItem("Raw Data", tabName = "raw_data"),
-                menuItem("About Me", tabName = "about_me")
+                menuItem("Country Data", tabName = "country_data", icon = icon("flag")),
+                menuItem("Raw Data", tabName = "raw_data", icon = icon("database")),
+                menuItem("About Me", tabName = "about_me", icon = icon("user"))
             )
         ),
         
@@ -29,6 +22,23 @@ shinyUI(
             tabItems(
                 tabItem(tabName = "world_data",
                         fluidRow(
+                                box(
+                                    column(12,
+                                            h1("Explore Aging Populations Around the World"),
+                                            br(),
+                                            h4("Left Links will bring you to Regional and Country"),
+                                            h4("data related to Aging, Health and Labor"),
+                                            br(),
+                                            br(),
+                                            strong(htmlOutput("aging_title_text")),
+                                            br(),
+                                            htmlOutput("adro_1"),
+                                            htmlOutput("adro_2"),
+                                            htmlOutput("adro_3"),
+                                            htmlOutput("adro_4"),
+                                            htmlOutput("adro_5")
+                                    )
+                                ),
                                 box(id = "world_data_box",
                                     sliderInput(
                                        inputId="world_year_slider",
@@ -45,6 +55,9 @@ shinyUI(
                         fluidRow(
                             box(id = "world_health_box",
                                 width = 12,
+                                h1("World Aging Populations and Health Care"),
+                                h4("Additional Text"),
+                                br(),
                                 column(6,
                                         plotlyOutput("world_health_expenditure")
                                 ),
@@ -55,38 +68,39 @@ shinyUI(
                         )
                 ),
                 tabItem(tabName = "world_labor",
-                                          fluidRow(
-                                              box(id = "world_labor_box",
-                                                  plotlyOutput("world_pop_labor")
-                                              )
-                                          )
-                ),
-                tabItem(tabName = "region_health",
                         fluidRow(
-                            box(id = "region_health_box",
-                                tabItem("Region Health place holder")
-                                #plotlyOutput("region_pop_health")
-                            )
-                        )
-                ),
-                tabItem(tabName = "region_labor",
-                        fluidRow(
-                            box(id = "region_labor_box",
-                                width = 12,
-                                column(6,
-                                        selectizeInput(inputId='region_labor_dropdown', 
-                                                       label='Region',
-                                                       choices=region_list),
-                                        plotlyOutput("region_labor_school"),
-                                        plotlyOutput("region_labor_literacy")
+                                box(id = "world_labor_box",
+                                    width = 12,
+                                    h1("World Aging Populations and Labor"),
+                                    h4("Additional Text"),
+                                    br(),
+                                    fluidRow(
+                                    column(6,
+                                            plotlyOutput("world_pop_labor"),
+                                            selectizeInput(inputId='region_labor_dropdown', 
+                                                          label='Region',
+                                                          choices=region_list,
+                                                          width = 300)
+                                    )
+                                    ),
+                                    fluidRow(
+                                            column(6,
+                                                plotlyOutput("region_labor_school")
+                                            ),
+                                            column(6,
+                                                plotlyOutput("region_labor_literacy")
+                                            )
+                                    )
                                 )
-                            )
                         )
                 ),
-                tabItem(tabName = "country_health",
+                tabItem(tabName = "country_data",
                         fluidRow(
                             box(id = "country_health_box",
                                 width = 12,
+                                h1("Country Aging Population Data"),
+                                h4("Additional Text"),
+                                br(),
                                  column(6,
                                         selectizeInput(inputId='country_health_dropdown', 
                                                         label='Country',
@@ -94,38 +108,66 @@ shinyUI(
                                                         selected = "Japan",
                                                         width = 200),
                                         plotlyOutput("birth_death_graph"),
-                                        plotlyOutput("country_lab_65_ratios")
+                                        sliderInput(
+                                            inputId="country_health_year_slider",
+                                            label="Select Year:",
+                                            min=1960,
+                                            max=2018,
+                                            value=1990,
+                                            width=500),
+                                        plotlyOutput("pop_age_graph")
                                  ),
                                  column(6,
-                                        sliderInput(
-                                             inputId="country_health_year_slider",
-                                             label="Select Year:",
-                                             min=1960,
-                                             max=2018,
-                                             value=1990,
-                                             sep=""),
-                                        plotlyOutput("pop_age_graph")
+                                        br(),
+                                        br(),
+                                        br(),
+                                        br(),
+                                        plotlyOutput("growth_graph"),
+                                        br(),
+                                        br(),
+                                        br(),
+                                        br(),
+                                        br(),
+                                        plotlyOutput("country_lab_65_ratios")
                                  )
                             )
                         )
                 ),
-                tabItem(tabName = "country_labor",
-                        fluidRow(
-                            tabBox(id = "country_labor_box",
-                                   tabPanel("Analysis", "Analysis place holder"
-                                   ),
-                                   tabPanel("Data", "Datatable place holder")
-                            )
-                        )
-                ),
                 tabItem(tabName = "raw_data",
+                        fluidRow(
+                            box(width = 7,
+                                column(12,
+                                       h1("Data for the project was acquired from the World Bank"),
+                                       h4("You can view the data here or click below for a direct link."),
+                                       br(),
+                                       h4(uiOutput("data_table_hnp_url")),
+                                       br()
+                                )
+                            )
+                        ),
+                        br(),
                         fluidRow(
                                 dataTableOutput('data_table')
                         )
                 ),
                 tabItem(tabName = "about_me",
                         fluidRow(
-                                 tabPanel("About Me", "About Me place holder")
+                            box(width = 6,
+                                column(3,
+                                       h1("Picture"),
+                                       h1("Place"),
+                                       h1("Holder"),
+                                ),
+                                column(8,
+                                       h1("Douglas Hilton"),
+                                       h4("douglas.hilton@gmail.com"),
+                                       br(),
+                                       br(),
+                                       h4("Hello, I'm currently a student at the NYC Data Science Academy."),
+                                       h4("This project helped me explore data cleaning, manipulation,"),
+                                       h4("plotting, and specifically use of Shiny.")
+                                )
+                            )
                         )
                 )
             )
