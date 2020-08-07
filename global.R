@@ -6,7 +6,7 @@ library(DT)
 library(tidyr)
 library(ggrepel)
 
-hnp_raw = read.csv("./data/hnp_stats_csv/HNP_StatsData.csv")
+hnp_raw = read.csv("./data/hnp_stats_csv/HNP_StatsData_Filtered.csv")
 
 hnp_country_region_raw = read.csv("./data/hnp_stats_csv/HNP_StatsCountry.csv")
 countrycode_type = read.csv("./data/hnp_stats_csv/CountryCode_Type.csv")
@@ -14,8 +14,6 @@ countrycode_type = read.csv("./data/hnp_stats_csv/CountryCode_Type.csv")
 year_column_names = paste0("X", 1960:2019)
 
 country_list = unique((hnp_raw %>% filter(!(Country.Code %in% countrycode_type$Country.Code)))$Country.Name)
-
-region_exclusion_list = c("East Asia & Pacific (IDA & IBRD countries)","Early-demographic dividend","East Asia & Pacific (excluding high income)","East Asia & Pacific (IDA & IBRD countries)","Europe & Central Asia (excluding high income)","Europe & Central Asia (IDA & IBRD countries)","Fragile and conflict affected situations","Heavily indebted poor countries (HIPC)","Late-demographic dividend","Latin America & Caribbean (excluding high income)","Latin America & the Caribbean (IDA & IBRD countries)","Least developed countries: UN classification","Middle East & North Africa (excluding high income)","Middle East & North Africa (IDA & IBRD countries)","OECD members","Other small states","Post-demographic dividend","Pre-demographic dividend","South Asia (IDA & IBRD)","Sub-Saharan Africa (excluding high income)","Sub-Saharan Africa (IDA & IBRD countries)","World")
 region_list = unique((hnp_raw %>% filter(Country.Code %in% countrycode_type[countrycode_type$Type == "Region",]$Country.Code) %>% filter(!(Country.Name %in% region_exclusion_list)))$Country.Name)
 
 population_count_indicator_codes = paste0('SP.POP.', rep(c("0004", "0509", "1014", "1519", "2024", "2529", "3034", "3539", "4044", "4549", "5054", "5559", "6064", "6569", "7074", "7579", "80UP"), 2), ".", c("FE", "MA"))
@@ -32,22 +30,6 @@ school_enrollment_tertiary = "SE.TER.ENRR"
 labor_force_total = "SL.TLF.TOTL.IN"
 total_pop = "SP.POP.TOTL"
 physician_per_1000 = "SH.MED.PHYS.ZS"
-
-
-# Increase in poverty gap at $1.90 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (USD)
-# Number of people pushed below the $1.90 ($ 2011 PPP) poverty line by out-of-pocket health care expenditure
-# Increase in poverty gap at $1.90 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (% of poverty line)
-# Proportion of population pushed below the $1.90 ($ 2011 PPP) poverty line by out-of-pocket health care expenditure (%)
-# Increase in poverty gap at $3.20 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (USD)
-# Number of people pushed below the $3.20 ($ 2011 PPP) poverty line by out-of-pocket health care expenditure
-# Increase in poverty gap at $3.20 ($ 2011 PPP) poverty line due to out-of-pocket health care expenditure (% of poverty line)
-# Proportion of population pushed below the $3.20 ($ 2011 PPP) poverty line by out-of-pocket health care expenditure (%)
-#Increase in poverty gap due to out of pocket health care expenditure
-# SH.UHC.NOP1.CG
-# SH.UHC.NOP1.TO
-# SH.UHC.NOP1.ZG
-# SH.UHC.NOP1.ZS
-# SH.UHC.NOP2.CG
-# SH.UHC.NOP2.TO
-# SH.UHC.NOP2.ZG
-# SH.UHC.NOP2.ZS
+pop_birth_rate = "SP.DYN.CBRT.IN"
+pop_death_rate = "SP.DYN.CDRT.IN"
+pop_growth_rate = "SP.POP.GROW"
