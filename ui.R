@@ -158,18 +158,22 @@ shinyUI(
                             column(3,
                                 br(),
                                 br(),
-                                uiOutput("doug_headshot"),
+                                img(
+                                    src = "doug_headshot.jpeg",
+                                    height = "150px",
+                                    width = "150px"
+                                )
                             ),
                             column(8,
                                 h1("Douglas Hilton"),
                                 h4("douglas.hilton@gmail.com"),
                                 br(),
                                 tags$a(
-                                    href="https://github.com/doughilton",
+                                    href = "https://github.com/doughilton",
                                     img(
-                                        src="github.png",
-                                        title="github",
-                                        height="40px"
+                                        src = "github.png",
+                                        title = "github",
+                                        height = "40px"
                                     )
                                 ),
                                 br(),
