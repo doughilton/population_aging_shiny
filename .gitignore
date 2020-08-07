@@ -1,4 +1,8 @@
-*.csv
 data inspection.Rmd
-data/
 .DS_Store
+HNP_StatsCountry-Series.csv
+HNP_StatsData.csv
+HNP_StatsFootNote.csv
+HNP_StatsSeries-Time.csv
+HNP_StatsSeries.csv
+

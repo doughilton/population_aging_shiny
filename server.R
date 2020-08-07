@@ -223,4 +223,9 @@ shinyServer(function(input, output, session) {
         tagList("Health Nutrition And Population Statistics:", hnp_url)
     })
     
+    #About Me
+    output$doug_headshot <- renderUI({
+        tags$img(src = "https://drive.google.com/file/d/1Ob63VBCfkKVHINcjt59AGRpbveY6bmLO/view?usp=sharing", width = 150, height = 150)
+    })
+    
 })

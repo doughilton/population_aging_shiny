@@ -156,14 +156,22 @@ shinyUI(
                     fluidRow(
                         box(width = 6,
                             column(3,
-                                h1("Picture"),
-                                h1("Place"),
-                                h1("Holder"),
+                                br(),
+                                br(),
+                                uiOutput("doug_headshot"),
                             ),
                             column(8,
                                 h1("Douglas Hilton"),
                                 h4("douglas.hilton@gmail.com"),
                                 br(),
+                                tags$a(
+                                    href="https://github.com/doughilton",
+                                    img(
+                                        src="github.png",
+                                        title="github",
+                                        height="40px"
+                                    )
+                                ),
                                 br(),
                                 h4("Hello, I'm currently a student at the NYC Data Science Academy."),
                                 h4("This project helped me explore data cleaning, manipulation,"),
