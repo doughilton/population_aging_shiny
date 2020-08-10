@@ -11,7 +11,7 @@ shinyUI(
                 menuItem("Population Age", tabName = "world_data", icon = icon("users")),
                 menuItem("World Data", icon = icon("globe"),
                     menuSubItem("Health", tabName = "world_health", icon = icon("heart")),
-                    menuSubItem("Labor", tabName = "world_labor", icon = icon("wrench"))
+                    menuSubItem("Labor + Education", tabName = "world_labor", icon = icon("wrench"))
                 ),
                 menuItem("Country Data", tabName = "country_data", icon = icon("flag")),
                 menuItem("Raw Data", tabName = "raw_data", icon = icon("database")),
@@ -28,7 +28,7 @@ shinyUI(
                                 h1("Explore Aging Populations Around the World"),
                                 br(),
                                 h4("Left Links will bring you to Regional and Country"),
-                                h4("data related to Aging, Health and Labor"),
+                                h4("data related to Aging, Health, Labor and Education"),
                                 br(),
                                 br(),
                                 strong(htmlOutput("aging_title_text")),
@@ -71,7 +71,7 @@ shinyUI(
                     fluidRow(
                         box(id = "world_labor_box",
                             width = 12,
-                            h1("World Aging Populations and Labor"),
+                            h1("World Aging Populations, Labor and Education"),
                             h4("Unemployment data from 2019"),
                             br(),
                             fluidRow(
